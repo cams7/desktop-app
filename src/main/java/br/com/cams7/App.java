@@ -25,47 +25,48 @@ public class App {
 	}
 
 	public void printCategoryInfo() {
-		List<Category> catList = categoryDAO.findAll();
-		System.out.printf(FORMAT_STRING, "Id", "Pet", "Projeto");
-		for (Category category : catList) {
-			List<Project> categoryProjects = category.getProjects();
-			String categoryProjectsString = " ";
-			for (Project project : categoryProjects)
-				categoryProjectsString += project.getName() + ". ";
+		List<Category> categories = categoryDAO.findAll();
+		System.out.printf(FORMAT_STRING, "Id", "Pet", "Projetos");
 
-			System.out.printf(FORMAT_STRING, category.getId(), category.getName(),
-					category.getProjects().size() + categoryProjectsString);
-		}
+		categories.stream().sorted((c1, c2) -> c1.getName().compareTo(c2.getName())).forEach(category -> {
+			List<Project> projects = category.getProjects();
+
+			String projectNames = projects.stream().map(Project::getName).reduce(" ", (n1, n2) -> n1 + n2 + ". ");
+
+			System.out.printf(FORMAT_STRING, category.getId(), category.getName(), projects.size() + projectNames);
+		});
+
 		System.out.print("\n");
 	}
 
 	public void printPersonInfo() {
-		List<Person> personList = personDAO.findAll();
-		System.out.printf(FORMAT_STRING, "Id", "Pessoa", "Projeto");
-		for (Person person : personList) {
-			List<Project> personProjects = person.getProjects();
-			String personProjectsString = " ";
-			for (Project project : personProjects)
-				personProjectsString += project.getName() + ". ";
+		List<Person> persons = personDAO.findAll();
+		System.out.printf(FORMAT_STRING, "Id", "Pessoa", "Projetos");
 
-			System.out.printf(FORMAT_STRING, person.getId(), person.getName(),
-					person.getProjects().size() + personProjectsString);
-		}
+		persons.stream().forEach(person -> {
+			List<Project> projects = person.getProjects();
+
+			String projectNames = projects.stream().sorted((p1, p2) -> p1.getName().compareTo(p2.getName()))
+					.map(Project::getName).reduce(" ", (n1, n2) -> n1 + n2 + ". ");
+
+			System.out.printf(FORMAT_STRING, person.getId(), person.getName(), projects.size() + projectNames);
+		});
+
 		System.out.print("\n");
 	}
 
 	public void printProjectInfo() {
-		List<Project> projectList = projectDAO.findAll();
-		System.out.printf(FORMAT_STRING, "Id", "Projeto", "Pessoa");
-		for (Project project : projectList) {
-			List<Person> projectPersons = project.getPersons();
-			String projectPersonsString = " ";
-			for (Person person : projectPersons)
-				projectPersonsString += person.getName() + ". ";
+		List<Project> projects = projectDAO.findAll();
+		System.out.printf(FORMAT_STRING, "Id", "Projeto", "Pessoas");
+
+		projects.stream().forEach(project -> {
+			List<Person> persons = project.getPersons();
+			String personNames = persons.stream().map(Person::getName).reduce(" ", (n1, n2) -> n1 + n2 + ". ");
 
 			System.out.printf(FORMAT_STRING, project.getId(), project.getName(),
-					project.getPersons().size() + projectPersonsString);
-		}
+					project.getPersons().size() + personNames);
+		});
+
 		System.out.print("\n");
 	}
 }
