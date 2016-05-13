@@ -13,24 +13,29 @@ import javax.swing.JScrollPane;
 
 import org.springframework.stereotype.Component;
 
-import br.com.cams7.app.model.Mercadoria;
+import br.com.cams7.app.model.MercadoriaEntity;
 
 /**
- * Tela principal da aplicação. Apresenta uma lista com as mercadorias cadastradas. 
- * 
- * <p>A partir dessa tela é possível criar/editar ou pesquisar mercadoria.</p>
+ * Tela principal da aplicação. Apresenta uma lista com as mercadorias
+ * cadastradas.
  * 
  * <p>
- *  <code>ListaMercadoriasFrame</code> é mapeada como <code>@Component</code> do Spring. 
- *  Dessa forma uma instância de <code>ListaMercadoriasFrame</code> pode ser criada e gerenciada
- *  pelo Spring, favorecendo a Inversão de Controle <i>(IoC)</i> e Injeção de Dependência <i>(DI)</i>.
+ * A partir dessa tela é possível criar/editar ou pesquisar mercadoria.
+ * </p>
+ * 
+ * <p>
+ * <code>ListaMercadoriasFrame</code> é mapeada como <code>@Component</code> do
+ * Spring. Dessa forma uma instância de <code>ListaMercadoriasFrame</code> pode
+ * ser criada e gerenciada pelo Spring, favorecendo a Inversão de Controle
+ * <i>(IoC)</i> e Injeção de Dependência <i>(DI)</i>.
  * </p>
  * 
  * @author YaW Tecnologia
  */
+@SuppressWarnings("serial")
 @Component
 public class ListaMercadoriasFrame extends JFrame {
-	
+
 	private MercadoriaTable tabela;
 	private JScrollPane scrollPane;
 	private JButton bNewMercadoria;
@@ -39,13 +44,13 @@ public class ListaMercadoriasFrame extends JFrame {
 	private JMenuBar menubar;
 	private MenuF1 menuAjuda;
 	private JMenuItem menuSobre;
-	
+
 	public ListaMercadoriasFrame() {
 		setTitle("Lista de Mercadoria");
-		
+
 		inicializaComponentes();
 		adicionaComponentes();
-		
+
 		pack();
 		setLocationRelativeTo(null);
 		setResizable(false);
@@ -60,26 +65,26 @@ public class ListaMercadoriasFrame extends JFrame {
 		bNewMercadoria = new JButton("Nova");
 		bNewMercadoria.setActionCommand("novaMercadoriaAction");
 		bNewMercadoria.setMnemonic(KeyEvent.VK_N);
-		
+
 		bFindMercadoria = new JButton("Buscar");
 		bFindMercadoria.setActionCommand("buscarMercadoriasAction");
 		bFindMercadoria.setMnemonic(KeyEvent.VK_B);
-		
+
 		bRefreshLista = new JButton("Atualizar");
 		bRefreshLista.setActionCommand("atualizarMercadoriasAction");
 		bRefreshLista.setMnemonic(KeyEvent.VK_A);
-		
+
 		menubar = new JMenuBar();
 		menuAjuda = new MenuF1("Ajuda");
 		menuAjuda.setMnemonic(KeyEvent.VK_J);
-        menuSobre = new JMenuItem("Sobre    - F1");
-        
-        menuAjuda.add(menuSobre);
-        menubar.add(menuAjuda);
-        setJMenuBar(menubar);
+		menuSobre = new JMenuItem("Sobre    - F1");
+
+		menuAjuda.add(menuSobre);
+		menubar.add(menuAjuda);
+		setJMenuBar(menubar);
 	}
-	
-	private void adicionaComponentes(){
+
+	private void adicionaComponentes() {
 		add(scrollPane);
 		JPanel panel = new JPanel();
 		panel.add(bNewMercadoria);
@@ -87,7 +92,7 @@ public class ListaMercadoriasFrame extends JFrame {
 		panel.add(bRefreshLista);
 		add(panel, BorderLayout.SOUTH);
 	}
-	
+
 	public JButton getNewButton() {
 		return bNewMercadoria;
 	}
@@ -95,27 +100,27 @@ public class ListaMercadoriasFrame extends JFrame {
 	public JButton getRefreshButton() {
 		return bRefreshLista;
 	}
-	
+
 	public JButton getFindButton() {
 		return bFindMercadoria;
 	}
-	
-	public void refreshTable(List<Mercadoria> mercadorias) {
+
+	public void refreshTable(List<MercadoriaEntity> mercadorias) {
 		tabela.reload(mercadorias);
 	}
-	
-	public Mercadoria getSelectedMercadoria() {
+
+	public MercadoriaEntity getSelectedMercadoria() {
 		return tabela.getMercadoriaSelected();
 	}
-	
+
 	public MercadoriaTable getTable() {
 		return tabela;
 	}
-	
+
 	public JMenuItem getMenuSobre() {
 		return menuSobre;
 	}
-	
+
 	public MenuF1 getMenuAjuda() {
 		return menuAjuda;
 	}

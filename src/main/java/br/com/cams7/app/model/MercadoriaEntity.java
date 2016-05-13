@@ -51,7 +51,7 @@ import javax.validation.constraints.Size;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "mercadoria")
-public class Mercadoria implements Serializable {
+public class MercadoriaEntity implements Serializable {
 
 	@Id
 	@SequenceGenerator(name = "seq_mercadoria", sequenceName = "gen_mercadoria_id", allocationSize = 1)
@@ -74,11 +74,11 @@ public class Mercadoria implements Serializable {
 
 	private static final NumberFormat numberFmt = NumberFormat.getNumberInstance(new Locale("pt", "BR"));
 
-	public Mercadoria() {
+	public MercadoriaEntity() {
 		super();
 	}
 
-	public Mercadoria(Integer id, String nome, String descricao, Integer quantidade, Float preco) {
+	public MercadoriaEntity(Integer id, String nome, String descricao, Integer quantidade, Float preco) {
 		this();
 
 		setId(id);

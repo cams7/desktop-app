@@ -26,6 +26,7 @@ import org.springframework.stereotype.Component;
  * 
  * @author YaW Tecnologia
  */
+@SuppressWarnings("serial")
 @Component
 public class BuscaMercadoriaFrame extends JFrame {
 

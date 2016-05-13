@@ -68,19 +68,11 @@
 		</dependency>
 
 		<!-- Componentes Spring: beans, core, aop, transaction, orm e jpa -->
-		<!--dependency> <groupId>org.springframework</groupId> <artifactId>spring-beans</artifactId> 
-			<version>${spring.version}</version> </dependency -->
-		<!--dependency> <groupId>org.springframework</groupId> <artifactId>spring-core</artifactId> 
-			<version>${spring.version}</version> </dependency -->
-		<!--dependency> <groupId>org.springframework</groupId> <artifactId>spring-aop</artifactId> 
-			<version>${spring.version}</version> </dependency -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		<!--dependency> <groupId>org.springframework</groupId> <artifactId>spring-tx</artifactId> 
-			<version>${spring.version}</version> </dependency -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
@@ -91,9 +83,6 @@
 			<artifactId>spring-data-jpa</artifactId>
 			<version>1.10.1.RELEASE</version>
 		</dependency>
-
-		<!-- dependency> <groupId>javax.annotation</groupId> <artifactId>jsr250-api</artifactId> 
-			<version>1.0</version> </dependency -->
 	</dependencies>
 
 	<build>

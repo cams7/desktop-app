@@ -1,5 +1,6 @@
 package br.com.cams7.app.util;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Enumeration;
 import java.util.jar.Attributes;
@@ -27,16 +28,13 @@ public class ApplicationProperties {
 					.getResources("META-INF/MANIFEST.MF");
 			while (resources.hasMoreElements()) {
 				Manifest manifest = new Manifest(resources.nextElement().openStream());
-				if (manifest.getMainAttributes().getValue("Built-By") != null
-				// &&
-				// manifest.getMainAttributes().getValue("Built-By").equals("YaW
-				// Tecnologia")
-				) {
+				if (manifest.getMainAttributes().getValue("Built-By") != null) {
 					instance = new ApplicationProperties(manifest);
 					break;
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -60,11 +58,11 @@ public class ApplicationProperties {
 		return checkProperty("Implementation-Site");
 	}
 
-	private static String checkProperty(String p) {
+	private static String checkProperty(String property) {
 		if (instance == null)
 			return "";
 
-		return instance.getManifestProperty(p);
+		return instance.getManifestProperty(property);
 	}
 
 	private String getManifestProperty(String property) {

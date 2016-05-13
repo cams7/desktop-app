@@ -4,32 +4,35 @@ import java.util.List;
 
 import javax.swing.table.AbstractTableModel;
 
-import br.com.cams7.app.model.Mercadoria;
+import br.com.cams7.app.model.MercadoriaEntity;
 
 /**
- * Define um TableModel para entidade <code>Mercadoria</code>, considerando as colunas:
+ * Define um TableModel para entidade <code>Mercadoria</code>, considerando as
+ * colunas:
  * <ul>
- *   <li>Nome;</li>
- *   <li>Descrição;</li>
- *   <li>Preço;</li>
- *   <li>Quantidade;</li>
- * </ul> 
+ * <li>Nome;</li>
+ * <li>Descrição;</li>
+ * <li>Preço;</li>
+ * <li>Quantidade;</li>
+ * </ul>
  * 
  * @author YaW Tecnologia
  */
+@SuppressWarnings("serial")
 public class MercadoriaTableModel extends AbstractTableModel {
 
-	private List<Mercadoria> mercadorias;
-	
+	private List<MercadoriaEntity> mercadorias;
+
 	private String[] colNomes = { "Nome", "Descricao", "Preco", "Quantidade" };
-	
+
 	private Class<?>[] colTipos = { String.class, String.class, String.class, Integer.class };
-	
-	public MercadoriaTableModel(){}
-	
-	public void reload(List<Mercadoria> mercadorias) {
+
+	public MercadoriaTableModel() {
+	}
+
+	public void reload(List<MercadoriaEntity> mercadorias) {
 		this.mercadorias = mercadorias;
-		//atualiza o componente na tela
+		// atualiza o componente na tela
 		fireTableDataChanged();
 	}
 
@@ -50,7 +53,7 @@ public class MercadoriaTableModel extends AbstractTableModel {
 
 	@Override
 	public int getRowCount() {
-		if (mercadorias == null){
+		if (mercadorias == null) {
 			return 0;
 		}
 		return mercadorias.size();
@@ -58,28 +61,28 @@ public class MercadoriaTableModel extends AbstractTableModel {
 
 	@Override
 	public Object getValueAt(int linha, int coluna) {
-		Mercadoria m = mercadorias.get(linha);
+		MercadoriaEntity mercadoria = mercadorias.get(linha);
 		switch (coluna) {
 		case 0:
-			return m.getNome();
+			return mercadoria.getNome();
 		case 1:
-			return m.getDescricao();
+			return mercadoria.getDescricao();
 		case 2:
-			return Mercadoria.convertPrecoToString(m.getPreco());
+			return MercadoriaEntity.convertPrecoToString(mercadoria.getPreco());
 		case 3:
-			return m.getQuantidade();
+			return mercadoria.getQuantidade();
 		default:
 			return null;
 		}
 	}
-	
+
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		return false;
 	}
-	
-	public Mercadoria getMercadoriaAt(int index) {
+
+	public MercadoriaEntity getMercadoriaAt(int index) {
 		return mercadorias.get(index);
 	}
-	
+
 }

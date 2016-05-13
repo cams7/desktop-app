@@ -13,15 +13,17 @@ import br.com.cams7.app.action.AbstractAction;
  * 
  * @author YaW Tecnologia
  */
+@SuppressWarnings("serial")
 public class MenuF1 extends JMenu {
 
 	public MenuF1(String title) {
 		super(title);
-		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F1"),"click");
+		this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke("F1"), "click");
 	}
-	
+
 	/**
-	 * @param action vinculada com a tecla F1.
+	 * @param action
+	 *            vinculada com a tecla F1.
 	 */
 	public void addListener(final AbstractAction action) {
 		this.getActionMap().put("click", new javax.swing.AbstractAction() {

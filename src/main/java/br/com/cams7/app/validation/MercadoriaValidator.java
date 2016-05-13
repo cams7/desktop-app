@@ -9,7 +9,8 @@ import javax.validation.ValidatorFactory;
 
 import org.springframework.stereotype.Component;
 
-import br.com.cams7.app.model.Mercadoria;
+import br.com.cams7.app.model.MercadoriaEntity;
+import javax.validation.Validator;
 
 /**
  * Implementa componente para validar os dados da entidade
@@ -23,7 +24,7 @@ import br.com.cams7.app.model.Mercadoria;
  * @author YaW Tecnologia
  */
 @Component
-public class MercadoriaValidator implements Validator<Mercadoria> {
+public class MercadoriaValidator implements EntityValidator<MercadoriaEntity> {
 
 	private static ValidatorFactory factory;
 
@@ -32,17 +33,16 @@ public class MercadoriaValidator implements Validator<Mercadoria> {
 	}
 
 	@Override
-	public String validate(Mercadoria m) {
+	public String validate(MercadoriaEntity mercadoria) {
 		StringBuilder sb = new StringBuilder();
-		if (m != null) {
-			javax.validation.Validator validator = factory.getValidator();
-			Set<ConstraintViolation<Mercadoria>> constraintViolations = validator.validate(m);
+		if (mercadoria != null) {
+			Validator validator = factory.getValidator();
+			Set<ConstraintViolation<MercadoriaEntity>> constraintViolations = validator.validate(mercadoria);
 
 			if (!constraintViolations.isEmpty()) {
 				sb.append("Validação da entidade Mercadoria\n");
-				for (ConstraintViolation<Mercadoria> constraint : constraintViolations) {
+				for (ConstraintViolation<MercadoriaEntity> constraint : constraintViolations)
 					sb.append(String.format("%n%s: %s", constraint.getPropertyPath(), constraint.getMessage()));
-				}
 			}
 		}
 		return sb.toString();

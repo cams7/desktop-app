@@ -1,25 +1,29 @@
 package br.com.cams7.app.event;
 
 /**
- * Define um componente básico como estrutura de evento. 
+ * Define um componente básico como estrutura de evento.
  * 
  * <p>
- *  Um evento é um objeto que está relacionado a alguma ação no sistema, 
- *  que normalmente ocasiona em um reação na interface gráfica.
+ * Um evento é um objeto que está relacionado a alguma ação no sistema, que
+ * normalmente ocasiona em um reação na interface gráfica.
  * </p>
  *
  * <p>
- *  O <code>AbstractEvent</code>, quando gerado deve ser encaminhado a algum <code>AbstractEventListener</code>.
- *  Ambos os componentes implementam o design pattern <strong>Observer</strong>.
+ * O <code>AbstractEvent</code>, quando gerado deve ser encaminhado a algum
+ * <code>AbstractEventListener</code>. Ambos os componentes implementam o design
+ * pattern <strong>Observer</strong>.
  * </p>
  * 
- * <p><code>AbstractEventListener</code> atua como <i>observado</i>.</p>
+ * <p>
+ * <code>AbstractEventListener</code> atua como <i>observado</i>.
+ * </p>
  * 
  * @see br.com.yaw.sjpac.event.AbstractEventListener
  * 
  * @author YaW Tecnologia
  *
- * @param <Target> tipo do elemento relacionado a geração do evento.
+ * @param <Target>
+ *            tipo do elemento relacionado a geração do evento.
  */
 public abstract class AbstractEvent<Target> {
 
@@ -28,7 +32,7 @@ public abstract class AbstractEvent<Target> {
 	public AbstractEvent(Target target) {
 		this.target = target;
 	}
-	
+
 	public Target getTarget() {
 		return target;
 	}

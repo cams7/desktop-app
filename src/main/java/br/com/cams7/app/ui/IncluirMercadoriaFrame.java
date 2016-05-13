@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 
 import org.springframework.stereotype.Component;
 
-import br.com.cams7.app.model.Mercadoria;
+import br.com.cams7.app.model.MercadoriaEntity;
 
 /**
  * Tela para incluir/editar o registro da <code>Mercadoria</code>.
@@ -35,6 +35,7 @@ import br.com.cams7.app.model.Mercadoria;
  * 
  * @author YaW Tecnologia
  */
+@SuppressWarnings("serial")
 @Component
 public class IncluirMercadoriaFrame extends JFrame {
 
@@ -43,7 +44,7 @@ public class IncluirMercadoriaFrame extends JFrame {
 	private JTextField tfDescricao;
 	private JTextField tfPreco;
 	private JFormattedTextField tfId;
-	private JFormattedTextField tfVersion;
+	// private JFormattedTextField tfVersion;
 
 	private JButton bSalvar;
 	private JButton bCancelar;
@@ -110,8 +111,8 @@ public class IncluirMercadoriaFrame extends JFrame {
 		tfId = new JFormattedTextField();
 		tfId.setValue(new Integer(0));
 		tfId.setEnabled(false);
-		tfVersion = new JFormattedTextField();
-		tfVersion.setVisible(false);
+		// tfVersion = new JFormattedTextField();
+		// tfVersion.setVisible(false);
 
 		painel.add(new JLabel("Nome:"));
 		painel.add(tfNome);
@@ -127,16 +128,14 @@ public class IncluirMercadoriaFrame extends JFrame {
 		return painel;
 	}
 
-	private Mercadoria loadMercadoriaFromPanel() {
+	private MercadoriaEntity loadMercadoriaFromPanel() {
 		String nome = null;
-		if (!tfNome.getText().trim().isEmpty()) {
+		if (!tfNome.getText().trim().isEmpty())
 			nome = tfNome.getText().trim();
-		}
 
 		String descricao = null;
-		if (!tfDescricao.getText().trim().isEmpty()) {
+		if (!tfDescricao.getText().trim().isEmpty())
 			descricao = tfDescricao.getText().trim();
-		}
 
 		Integer quantidade = null;
 		try {
@@ -148,9 +147,8 @@ public class IncluirMercadoriaFrame extends JFrame {
 
 		Float preco = null;
 		try {
-			if (!tfPreco.getText().trim().isEmpty()) {
-				preco = Mercadoria.formatStringToPreco(tfPreco.getText());
-			}
+			if (!tfPreco.getText().trim().isEmpty())
+				preco = MercadoriaEntity.formatStringToPreco(tfPreco.getText());
 		} catch (ParseException nex) {
 			throw new RuntimeException("Erro durante a conversão do campo preço (Double).\nConteudo inválido!");
 		}
@@ -158,10 +156,10 @@ public class IncluirMercadoriaFrame extends JFrame {
 		Integer id = null;
 		try {
 			id = Integer.parseInt(tfId.getText());
-		} catch (Exception nex) {
+		} catch (NumberFormatException e) {
 		}
 
-		return new Mercadoria(id, nome, descricao, quantidade, preco);
+		return new MercadoriaEntity(id, nome, descricao, quantidade, preco);
 	}
 
 	public void resetForm() {
@@ -170,30 +168,30 @@ public class IncluirMercadoriaFrame extends JFrame {
 		tfDescricao.setText("");
 		tfPreco.setText("");
 		tfQuantidade.setValue(new Integer(1));
-		tfVersion.setValue(null);
+		// tfVersion.setValue(null);
 		bExcluir.setVisible(false);
 	}
 
-	private void populaTextFields(Mercadoria m) {
-		tfId.setValue(m.getId());
-		tfNome.setText(m.getNome());
-		tfDescricao.setText(m.getDescricao());
-		tfQuantidade.setValue(m.getQuantidade());
-		tfPreco.setText(m.getPrecoFormatado());
+	private void populaTextFields(MercadoriaEntity mercadoria) {
+		tfId.setValue(mercadoria.getId());
+		tfNome.setText(mercadoria.getNome());
+		tfDescricao.setText(mercadoria.getDescricao());
+		tfQuantidade.setValue(mercadoria.getQuantidade());
+		tfPreco.setText(mercadoria.getPrecoFormatado());
 	}
 
 	/**
 	 * Limpa e carrega os campos da tela de acordo com objeto
 	 * <code>Mercadoria</code>.
 	 * 
-	 * @param m
+	 * @param mercadoria
 	 *            referência da <code>Mercadoria</code> que deve ser apresentada
 	 *            na tela.
 	 */
-	public void setMercadoria(Mercadoria m) {
+	public void setMercadoria(MercadoriaEntity mercadoria) {
 		resetForm();
-		if (m != null) {
-			populaTextFields(m);
+		if (mercadoria != null) {
+			populaTextFields(mercadoria);
 			bExcluir.setVisible(true);
 		}
 	}
@@ -202,7 +200,7 @@ public class IncluirMercadoriaFrame extends JFrame {
 	 * @return uma nova instância de <code>Mercadoria</code> com os dados
 	 *         preenchidos do campos na tela.
 	 */
-	public Mercadoria getMercadoria() {
+	public MercadoriaEntity getMercadoria() {
 		return loadMercadoriaFromPanel();
 	}
 
@@ -213,7 +211,7 @@ public class IncluirMercadoriaFrame extends JFrame {
 	public Integer getMercadoriaId() {
 		try {
 			return Integer.parseInt(tfId.getText());
-		} catch (Exception nex) {
+		} catch (NumberFormatException e) {
 			return null;
 		}
 	}
