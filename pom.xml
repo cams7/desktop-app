@@ -9,7 +9,7 @@
 
 	<name>Aplicação desktop</name>
 	<description>Exemplo de uma aplicação desktop</description>
-	
+
 	<url>https://github.com/cams7/desktop-app/tree/master</url>
 	<scm>
 		<connection>scm:git:https://github.com/cams7/desktop-app.git</connection>
@@ -20,7 +20,8 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.build.timestamp.format>yyyyMMdd'T'HHmmss</maven.build.timestamp.format>
 
-		<log4j.file>C:/Desenv/Github/desktop-app/log/desktop-app.log</log4j.file>
+		<spring.version>4.2.6.RELEASE</spring.version>
+		<log4j.file>log/app.log</log4j.file>
 	</properties>
 
 	<dependencies>
@@ -54,6 +55,45 @@
 			<artifactId>javax.el-api</artifactId>
 			<version>3.0.1-b04</version>
 		</dependency>
+
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>3.2.2</version>
+		</dependency>
+
+		<!-- Componentes Spring: beans, core, aop, transaction, orm e jpa -->
+		<!--dependency> <groupId>org.springframework</groupId> <artifactId>spring-beans</artifactId> 
+			<version>${spring.version}</version> </dependency -->
+		<!--dependency> <groupId>org.springframework</groupId> <artifactId>spring-core</artifactId> 
+			<version>${spring.version}</version> </dependency -->
+		<!--dependency> <groupId>org.springframework</groupId> <artifactId>spring-aop</artifactId> 
+			<version>${spring.version}</version> </dependency -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<!--dependency> <groupId>org.springframework</groupId> <artifactId>spring-tx</artifactId> 
+			<version>${spring.version}</version> </dependency -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>1.10.1.RELEASE</version>
+		</dependency>
+
+		<!-- dependency> <groupId>javax.annotation</groupId> <artifactId>jsr250-api</artifactId> 
+			<version>1.0</version> </dependency -->
 	</dependencies>
 
 	<build>
@@ -84,9 +124,7 @@
 					<artifactId>maven-jar-plugin</artifactId>
 					<version>2.6</version>
 					<configuration>
-						<!--excludes>
-							<exclude>**/log4j.properties</exclude>
-						</excludes-->
+						<!--excludes> <exclude>**/log4j.properties</exclude> </excludes -->
 						<archive>
 							<manifest>
 								<addClasspath>true</addClasspath>
@@ -94,9 +132,13 @@
 							<manifestEntries>
 								<url>${project.url}</url>
 								<Implementation-Build>${buildNumber}</Implementation-Build>
-								<Specification-Title>${project.name}</Specification-Title>
-								<Specification-Vendor>N/A</Specification-Vendor>
+								<Implementation-Version>${project.version}</Implementation-Version>
+								<Implementation-Vendor-Id>${project.groupId}</Implementation-Vendor-Id>
+								<Implementation-Title>${project.name}</Implementation-Title>
+								<Implementation-Site>${project.url}</Implementation-Site>
 								<Specification-Version>${project.version}</Specification-Version>
+								<Specification-Vendor>N/A</Specification-Vendor>
+								<Specification-Title>${project.name}</Specification-Title>
 								<Signature-Version>${project.version}</Signature-Version>
 								<Built-By>${user.name}</Built-By>
 								<Built-OS>${os.name}</Built-OS>
@@ -135,8 +177,8 @@
 					<skip>false</skip>
 				</configuration>
 			</plugin>
-			
-			<!--Gera informações do controle de versão-->
+
+			<!--Gera informações do controle de versão -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>buildnumber-maven-plugin</artifactId>
@@ -164,11 +206,13 @@
 				<!-- persistence.xml -->
 				<persistence.hibernate.connection.driver_class>org.hsqldb.jdbcDriver</persistence.hibernate.connection.driver_class>
 				<persistence.hibernate.dialect>org.hibernate.dialect.HSQLDialect</persistence.hibernate.dialect>
-				<persistence.hibernate.hbm2ddl.auto>create</persistence.hibernate.hbm2ddl.auto>
+				<!--persistence.hibernate.hbm2ddl.auto>create</persistence.hibernate.hbm2ddl.auto -->
+				<persistence.hibernate.hbm2ddl.auto>update</persistence.hibernate.hbm2ddl.auto>
 				<persistence.hibernate.show_sql>true</persistence.hibernate.show_sql>
-				<persistence.hibernate.format_sql>false</persistence.hibernate.format_sql>
+				<persistence.hibernate.format_sql>true</persistence.hibernate.format_sql>
 
-				<persistence.hibernate.connection.url>jdbc:hsqldb:mem:desktop-app</persistence.hibernate.connection.url>
+				<!-- persistence.hibernate.connection.url>jdbc:hsqldb:mem:app</persistence.hibernate.connection.url -->
+				<persistence.hibernate.connection.url>jdbc:hsqldb:file:db/hsqldb/app</persistence.hibernate.connection.url>
 				<persistence.hibernate.connection.username>sa</persistence.hibernate.connection.username>
 				<persistence.hibernate.connection.password></persistence.hibernate.connection.password>
 			</properties>
@@ -196,7 +240,7 @@
 						</executions>
 
 						<configuration>
-							<mainClass>br.com.cams7.App</mainClass>
+							<mainClass>br.com.cams7.app.Main</mainClass>
 						</configuration>
 					</plugin>
 				</plugins>
@@ -217,7 +261,7 @@
 				<persistence.hibernate.show_sql>true</persistence.hibernate.show_sql>
 				<persistence.hibernate.format_sql>false</persistence.hibernate.format_sql>
 
-				<persistence.hibernate.connection.url>jdbc:firebirdsql:localhost/3050:C:/Desenv/Github/desktop-app/db/desktop-app.fdb?lc_ctype=UTF8</persistence.hibernate.connection.url>
+				<persistence.hibernate.connection.url>jdbc:firebirdsql:localhost/3050:C:/Desenv/Github/desktop-app/db/app.fdb?lc_ctype=UTF8</persistence.hibernate.connection.url>
 				<persistence.hibernate.connection.username>sysdba</persistence.hibernate.connection.username>
 				<persistence.hibernate.connection.password>masterkey</persistence.hibernate.connection.password>
 			</properties>
@@ -268,7 +312,7 @@
 							<archive>
 								<manifest>
 									<classpathPrefix>${dependency.jars}/</classpathPrefix>
-									<mainClass>br.com.cams7.App</mainClass>
+									<mainClass>br.com.cams7.app.Main</mainClass>
 								</manifest>
 							</archive>
 						</configuration>

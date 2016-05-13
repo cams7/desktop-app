@@ -4,26 +4,22 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
              http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd"
 	version="2.1">
-	<persistence-unit name="appUnit">
+	<persistence-unit name="appUnit" transaction-type="RESOURCE_LOCAL">
+		<!-- provider>org.hibernate.ejb.HibernatePersistence</provider> <class>br.com.cams7.app.model.Mercadoria</class -->
 		<properties>
-			<!-- property name="hibernate.connection.driver_class" value="" 
-				/> <property name="hibernate.connection.url" value="" 
-				/> <property name="hibernate.connection.username" value="" /> <property 
-				name="hibernate.connection.password" value="" /> <property name="hibernate.dialect" 
-				value="" / -->
-			<property name="hibernate.connection.driver_class"
-				value="${persistence.hibernate.connection.driver_class}" />
-			<property name="hibernate.connection.url" value="${persistence.hibernate.connection.url}" />
-			<property name="hibernate.connection.username"
-				value="${persistence.hibernate.connection.username}" />
-			<property name="hibernate.connection.password"
-				value="${persistence.hibernate.connection.password}" />
+			<!--property name="hibernate.connection.driver_class" value="${persistence.hibernate.connection.driver_class}" 
+				/> <property name="hibernate.connection.url" value="${persistence.hibernate.connection.url}" 
+				/> <property name="hibernate.connection.username" value="${persistence.hibernate.connection.username}" 
+				/> <property name="hibernate.connection.password" value="${persistence.hibernate.connection.password}" 
+				/ -->
 			<property name="hibernate.dialect" value="${persistence.hibernate.dialect}" />
 
 			<property name="hibernate.show_sql" value="${persistence.hibernate.show_sql}" />
 			<property name="hibernate.format_sql" value="${persistence.hibernate.format_sql}" />
 
 			<property name="hibernate.hbm2ddl.auto" value="${persistence.hibernate.hbm2ddl.auto}" />
+
+			<!-- property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/ -->
 		</properties>
 	</persistence-unit>
 </persistence>
